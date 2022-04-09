@@ -19,9 +19,21 @@ pipeline {
          }
          stage('3-Deploy') {
              steps {
-                 echo "start of deploying"
-                                 echo "Deploying"
-                                 echo "end of deploying"
+                 sshPublisher(publishers: [sshPublisherDesc(configName: 'mywebserver',
+                 transfers: [sshTransfer(cleanRemote: false, excludes: '',
+                 execCommand: 'echo \'finish\'',
+                 execTimeout: 120000,
+                 flatten: false,
+                 makeEmptyDirs: false,
+                 noDefaultExcludes: false,
+                 patternSeparator: '[, ]+',
+                 remoteDirectory: '/var/www/html',
+                 remoteDirectorySDF: false,
+                 removePrefix: '',
+                 sourceFiles: '**')],
+                 usePromotionTimestamp: false,
+                 useWorkspaceInPromotion: false,
+                 verbose: false)])
              }
          }
     }
