@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -10,7 +9,7 @@ pipeline {
                                   echo "End of building"
               }
          }
-         stage('1-Test') {
+         stage('2-Test') {
              steps {
                   echo "Start of stage test"
                                  echo "testing"
@@ -19,7 +18,7 @@ pipeline {
          }
          stage('3-Deploy') {
              steps {
-                 sshPublisher(publishers: [sshPublisherDesc(configName: 'mywebserver',
+                 sshPublisher(publishers: [sshPublisherDesc(configName: 'jenkins-test',
                  transfers: [sshTransfer(cleanRemote: false, excludes: '',
                  execCommand: 'echo \'finish\'',
                  execTimeout: 120000,
@@ -27,7 +26,7 @@ pipeline {
                  makeEmptyDirs: false,
                  noDefaultExcludes: false,
                  patternSeparator: '[, ]+',
-                 remoteDirectory: '/var/www/html',
+                 remoteDirectory: 'JustSite',
                  remoteDirectorySDF: false,
                  removePrefix: '',
                  sourceFiles: '**')],
